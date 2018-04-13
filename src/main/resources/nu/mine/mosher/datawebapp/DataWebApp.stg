@@ -1,0 +1,32 @@
+delimiters "$", "$"
+
+entities(x,rl) ::= "$page(art(s(p(x),art(rl:tab()))))$"
+
+page(x) ::= <<
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Data Web</title>
+    </head>
+    <body>
+        <nav><a href="?">home</a></nav>
+        $x$
+    </body>
+</html>
+>>
+
+tab(l) ::= "$sec(s(h4(l.head),ul(l.items:a_li())))$"
+
+a_li(x) ::= "$li(a(x))$"
+
+a(x) ::= "<a href=\"?id=$x.id$\">$x$</a>"
+
+art(x) ::= "<article>$x$</article>"
+sec(x) ::= "<section>$x$</section>"
+h4(x) ::= "<h4>$x$</h4>"
+ul(x) ::= "<ul>$x$</ul>"
+li(x) ::= "<li>$x$</li>"
+p(x) ::= "<p>$x$</p>"
+
+s(x,y) ::= "$x$$y$"
