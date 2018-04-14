@@ -1,9 +1,15 @@
 apply plugin: 'java'
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_9
+
+group 'nu.mine.mosher.datawebapp'
+version '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'http://mosher.mine.nu/nexus/repository/maven-public/'
+    }
 }
 
 dependencies {
