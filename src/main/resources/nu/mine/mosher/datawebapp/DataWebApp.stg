@@ -16,11 +16,17 @@ page(x) ::= <<
 </html>
 >>
 
-tab(l) ::= "$sec(s(h4(l.head),ul(l.items:a_li())))$"
+tab(l) ::= "$sec(s(h4(l.header),ul(l:a_li())))$"
 
 a_li(x) ::= "$li(a(x))$"
 
-a(x) ::= "<a href=\"?id=$x.id$\">$x$</a>"
+a(x) ::= <<
+$if(x.id)$
+<a href=\"?entity=$x.class.name$&id=$x.id$\">$x$</a>
+$else$
+$x$$\\$
+$endif$
+>>
 
 art(x) ::= "<article>$x$</article>"
 sec(x) ::= "<section>$x$</section>"
@@ -30,3 +36,12 @@ li(x) ::= "<li>$x$</li>"
 p(x) ::= "<p>$x$</p>"
 
 s(x,y) ::= "$x$$y$"
+
+exp(x) ::= <<
+$if (x.expandable)$
+$x.header$
+    $x:exp()$
+$else$
+$a(x)$$\\$
+$endif$
+>>

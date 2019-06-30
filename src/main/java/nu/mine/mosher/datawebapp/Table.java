@@ -1,24 +1,32 @@
 package nu.mine.mosher.datawebapp;
 
+import java.util.AbstractList;
 import java.util.List;
 
-import static java.util.Collections.unmodifiableList;
-
-public final class Table
-{
+public final class Table extends AbstractList {
     private final String head;
     private final List items;
 
-    Table(String head, List items) {
+    public Table(String head, List items) {
         this.head = head;
         this.items = items;
     }
 
-    public String getHead() {
+    public String getHeader() {
         return this.head;
     }
 
-    public List getItems() {
-        return unmodifiableList(this.items);
+    public boolean isExpandable() {
+        return true;
+    }
+
+    @Override
+    public int size() {
+        return items.size();
+    }
+
+    @Override
+    public Object get(final int index) {
+        return items.get(index);
     }
 }
