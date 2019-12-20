@@ -1,13 +1,13 @@
 package nu.mine.mosher.datawebapp;
 
+import fi.iki.elonen.NanoHTTPD;
+import nu.mine.mosher.datawebapp.example.*;
 import org.stringtemplate.v4.STGroupFile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 
+import static java.lang.Runtime.getRuntime;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static nu.mine.mosher.datawebapp.Utils.getValue;
@@ -67,5 +67,38 @@ public class DataWebApp {
             }
         }
         return Optional.empty();
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        final List<Book> model = new ArrayList<>();
+
+        final List<Author> goodOmensAuthors = new ArrayList<>();
+        goodOmensAuthors.add(new Author("Neil Gaiman"));
+        goodOmensAuthors.add(new Author("Terry Pratchett"));
+        model.add(new Book("Good Omens", goodOmensAuthors));
+
+        final Author stephenKing = new Author("Stephen King");
+
+        final List<Author> talismanAuthors = new ArrayList<>();
+        talismanAuthors.add(stephenKing);
+        talismanAuthors.add(new Author("Peter Straub"));
+        model.add(new Book("Talisman", talismanAuthors));
+
+        model.add(new Book("Carrie", Collections.singletonList(stephenKing)));
+
+
+
+        final DataWebApp dataWebApp = new DataWebApp(Book.class.getPackage().getName());
+        final NanoHTTPD server = new NanoHTTPD(8080) {
+            @Override
+            public Response serve(final IHTTPSession http) {
+                return newFixedLengthResponse(dataWebApp.page(model));
+            }
+        };
+
+        server.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
+
+        getRuntime().addShutdownHook(new Thread(server::stop));
     }
 }

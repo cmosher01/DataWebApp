@@ -36,12 +36,3 @@ li(x) ::= "<li>$x$</li>"
 p(x) ::= "<p>$x$</p>"
 
 s(x,y) ::= "$x$$y$"
-
-exp(x) ::= <<
-$if (x.expandable)$
-$x.header$
-    $x:exp()$
-$else$
-$a(x)$$\\$
-$endif$
->>

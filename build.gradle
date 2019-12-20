@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_9
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
 group 'nu.mine.mosher.datawebapp'
 version '1.0.0-SNAPSHOT'
@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'org.nanohttpd', name: 'nanohttpd', version: 'latest.integration'
     implementation group: 'org.antlr', name: 'ST4', version: 'latest.release'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: 'latest.release'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: 'latest.release'
